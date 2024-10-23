@@ -17,3 +17,12 @@ Plan B ("Medium"):
 Plan C ("Premium"):
     - Productos ilimitados
     - Soporte via WhatsApp 
+
+
+
+
+Manejo del descuento:
+
+Modificando la variable descuentoPorcentaje en el código
+hacemos que el sistema aplique automáticamente el descuento
+que esté activo en ese momento 

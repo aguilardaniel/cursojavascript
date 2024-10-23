@@ -19,25 +19,100 @@ Plan C ("Premium"):
     - Productos ilimitados
     - Soporte via WhatsApp 
 
+
+
+
+
+
+Manejo del descuento:
+
+Modificando la variable descuentoPorcentaje en el código
+hacemos que el sistema aplique automáticamente el descuento
+que esté activo en ese momento 
+
+
 */
 
 
 
-let valorPlanA = 30000;
-let valorPlanB = 75000;
-let valorPlanC = 125000;
+
+
+//----- Array y Array de Objetos--------
+
+const planes=[
+    {nombre:"Plan Inicial", precio: 30000},
+    {nombre:"Plan Medium", precio: 75000},
+    {nombre:"Plan Premium", precio: 125000},
+];
+
+let planesConDescuento=[];
+
+//----- Array y Array de Objetos -----
+
+
+
 let requiereSoporte;
 let hayCantidad=false;
 let planSugerido;
+let descuentoPorcentaje= 20;
+let ofertaCompleta="";
+
 
 //----- Funciones--------
+
+function generarDescuentos(plan){
+    
+    let precioConDescuento = planes[plan].precio - planes[plan].precio * descuentoPorcentaje / 100;
+    planesConDescuento.push(precioConDescuento);
+
+}
+
+function mostrarDescuentos(plan){
+
+    ofertaCompleta += "- " + planes[plan].nombre + " = $" + planesConDescuento[plan] + "\n";
+    
+
+}
 
 function noHayCantidad(){
     hayCantidad=false;
     alert("No definiste una cantidad de productos exacta");
 }
 
+function recomendarPlan(plan){
+
+    alert(`Te sugerimos contratar nuestro ${planes[plan].nombre}\n Su valor es de: $${planesConDescuento[plan]} por año`);
+
+
+}
+
+function generarDescuentosYMostrar(vectorPlanes, funcionDefinida){
+    
+    /* La función de orden superior definida puede usarse con:
+    generarDescuentos o mostrarDescuentos */
+    
+    for (let i = 0; i < vectorPlanes.length; i++) {
+       funcionDefinida(i);
+      }
+
+        
+
+    
+}
+   
+
+
+
 //----- Fin Funciones -----
+
+
+
+
+
+
+//utiliza la funcion de orden superior
+generarDescuentosYMostrar(planes, generarDescuentos);
+generarDescuentosYMostrar(planes, mostrarDescuentos);
 
 
 
@@ -110,11 +185,11 @@ while(pidioSoporte<=1){
 //Inteta ubicar al cliente en uno de los planes
 
 if(hayCantidad===true && cantidadDeProductos<=30 && requiereSoporte===false){
-    planSugerido="A";    
+    planSugerido=0;    
 }else if(cantidadDeProductos>=30 && requiereSoporte===false){
-    planSugerido="B";
+    planSugerido=1;
 }else if(requiereSoporte===true){
-    planSugerido="C";
+    planSugerido=2;
 }
 
 
@@ -122,20 +197,20 @@ if(hayCantidad===true && cantidadDeProductos<=30 && requiereSoporte===false){
 //incluso si no ingresó los datos que se le pidió
 
 switch (planSugerido) {
-    case "A":
-        alert(`Te sugerimos contratar nuestro Plan Inicial\n Su valor es de: $${valorPlanA} por año`);
+    case 0:
+        recomendarPlan(planSugerido);
         break;
     
-    case "B":
-        alert(`Te sugerimos contratar nuestro Plan Medium\n Su valor es de: $${valorPlanB} por año`);
+    case 1:
+        recomendarPlan(planSugerido);
         break;
     
-    case "C":
-        alert(`Te sugerimos contratar nuestro Plan Premium\n Su valor es de: $${valorPlanC} por año`);
+    case 2:
+        recomendarPlan(planSugerido);
         break;
 
     default:
-        alert(`Te sugerimos que nos contactes por WhatsApp\n para ayudarte a cotizar el mejor plan para vos`);
+        alert(`Te sugerimos que nos contactes por WhatsApp\npara ayudarte a definir el mejor plan para vos\n\n${ofertaCompleta} `);
         break;
 }
 
