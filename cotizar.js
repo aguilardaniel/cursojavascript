@@ -28,7 +28,12 @@ Manejo del descuento:
 
 Modificando la variable descuentoPorcentaje en el código
 hacemos que el sistema aplique automáticamente el descuento
-que esté activo en ese momento 
+que esté activo en ese momento (Este es un descuento fijo)
+
+Tambien se aplica un descuento que se suma al anterior dependiendo 
+la cantidad de productos con la que quiera trabajar el usuario
+A menor cantidad de productos, mayor es el descuento
+esto se maneja con la variable descuentoExtra
 
 
 */
@@ -54,7 +59,8 @@ let planesConDescuento=[];
 let requiereSoporte;
 let hayCantidad=false;
 let planSugerido;
-let descuentoPorcentaje= 20;
+let descuentoPorcentaje= 10;
+let descuentoExtra;
 let ofertaCompleta="";
 
 
@@ -62,15 +68,40 @@ let ofertaCompleta="";
 
 function generarDescuentos(plan){
     
-    let precioConDescuento = planes[plan].precio - planes[plan].precio * descuentoPorcentaje / 100;
-    planesConDescuento.push(precioConDescuento);
+
+    let precioConDescuentoMinimo = planes[plan].precio - planes[plan].precio * (descuentoPorcentaje) / 100;
+    planesConDescuento.push(precioConDescuentoMinimo);
 
 }
+
 
 function mostrarDescuentos(plan){
 
     ofertaCompleta += "- " + planes[plan].nombre + " = $" + planesConDescuento[plan] + "\n";
     
+
+}
+
+
+function generarDescuentoFinal(plan){
+    
+    if(cantidadDeProductos<=30){
+        descuentoExtra=20;
+    }
+    else if(cantidadDeProductos>30 && cantidadDeProductos<=150){
+        descuentoExtra=15;
+    }
+    else if(cantidadDeProductos>150 && cantidadDeProductos<=500){
+        descuentoExtra=10;
+    }
+    else if(cantidadDeProductos>500 && cantidadDeProductos<=3000){
+        descuentoExtra=5;
+    }else{
+        descuentoExtra=0;
+    }
+
+    let precioConDescuento = planes[plan].precio - planes[plan].precio * (descuentoPorcentaje + descuentoExtra) / 100;
+    return precioConDescuento;
 
 }
 
@@ -81,7 +112,12 @@ function noHayCantidad(){
 
 function recomendarPlan(plan){
 
-    alert(`Te sugerimos contratar nuestro ${planes[plan].nombre}\n Su valor es de: $${planesConDescuento[plan]} por año`);
+const valorFinalConDescuentos = generarDescuentoFinal(plan);
+const descuentoTotalAplicado = descuentoPorcentaje + descuentoExtra;
+
+    alert(`Te sugerimos contratar nuestro ${planes[plan].nombre}\n 
+            Para la cantidad de productos que definiste podemos hacerte un descuento de ${descuentoTotalAplicado}% en el plan anual\n
+            Su valor final es de: $${valorFinalConDescuentos} por año`);
 
 
 }
@@ -210,7 +246,7 @@ switch (planSugerido) {
         break;
 
     default:
-        alert(`Te sugerimos que nos contactes por WhatsApp\npara ayudarte a definir el mejor plan para vos\n\n${ofertaCompleta} `);
+        alert(`Te sugerimos que nos contactes por WhatsApp\npara ayudarte a definir el mejor plan para vos\n\n${ofertaCompleta} \nNuestros vendedores podrán asignarte descuentos extras \ndependiendo de la cantidad de productos que tengas `);
         break;
 }
 
