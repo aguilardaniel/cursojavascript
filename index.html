@@ -1,11 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Simulador sistema de pedidos</title>
+  
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+
+        .oculto{
+
+            display: none;
+        }
+        
+
+    </style>
 </head>
 <body>
-    <script src="./cotizar.js"></script>
+
+<div class="container mt-5">
+    <h1 class="text-center">Cotizamos tu plan</h1>
+    
+    <div class="row justify-content-start mt-4">
+        <div class="col-md-6">
+            <form>
+                
+                <div class="form-group">
+                    <label for="cantidadProductos" id="labelCantidad">¿Cuantos productos hay en tu carta?</label>
+                    <input type="number" class="form-control" id="cantidadProductos" placeholder="Ingrese la cantidad" min="1">
+                </div>
+
+                
+                <div class="form-group">
+                    <label for="requiereSoporte">¿Necesitás un plan con <strong>soporte personalizado</strong> via WhatsApp? </label>
+                    <select class="form-control" id="requiereSoporte">
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                
+                
+                <button type="submit" class="btn btn-primary" id="cotizar">Cotizar</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row justify-content-start mt-4" id="recomendacion">
+        
+    </div>
+    <div class="container pl-0"><button class="btn btn-success oculto" id="botonVer">Ver Planes sin descuento</button></div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="./cotizar.js"></script>
 </body>
 </html>
