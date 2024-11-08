@@ -38,7 +38,17 @@ esto se maneja con la variable descuentoExtra
 
 */
 
+let recomendacion = document.getElementById("recomendacion");
+let cantidadProductosHtml= document.getElementById("cantidadProductos");
+let requiereSoporteHtml= document.getElementById("requiereSoporte");
+let labelCantidad= document.getElementById("labelCantidad");
 
+let botonVerHtml= document.getElementById("botonVer");
+let cotizarHtml= document.getElementById("cotizar");
+let cantidadString="lalala";
+let soportePersonalizado;
+let cantidadDeProductos;
+console.log(cantidadString);
 
 
 
@@ -49,6 +59,10 @@ const planes=[
     {nombre:"Plan Medium", precio: 75000},
     {nombre:"Plan Premium", precio: 125000},
 ];
+
+localStorage.setItem("planes", JSON.stringify(planes));
+//const planesJSON= JSON.stringify(planes);
+//localStorage.setItem(planesJSON);
 
 let planesConDescuento=[];
 
@@ -77,7 +91,7 @@ function generarDescuentos(plan){
 
 function mostrarDescuentos(plan){
 
-    ofertaCompleta += "- " + planes[plan].nombre + " = $" + planesConDescuento[plan] + "\n";
+    ofertaCompleta += "- " + planes[plan].nombre + " = $" + planesConDescuento[plan] + "<br>";
     
 
 }
@@ -105,20 +119,19 @@ function generarDescuentoFinal(plan){
 
 }
 
-function noHayCantidad(){
-    hayCantidad=false;
-    alert("No definiste una cantidad de productos exacta");
-}
-
 function recomendarPlan(plan){
 
 const valorFinalConDescuentos = generarDescuentoFinal(plan);
 const descuentoTotalAplicado = descuentoPorcentaje + descuentoExtra;
 
+recomendacion.innerHTML= `<p class="ml-3"> Te sugerimos contratar nuestro <strong> ${planes[plan].nombre} </strong><br><br> 
+            Para la cantidad de productos que definiste <br>podemos hacerte <strong> un descuento de  ${descuentoTotalAplicado}% </strong> en el plan anual.
+            <br><br> Su valor final es de: <strong> $${valorFinalConDescuentos} por año </strong></p>`;
+/*
     alert(`Te sugerimos contratar nuestro ${planes[plan].nombre}\n 
             Para la cantidad de productos que definiste podemos hacerte un descuento de ${descuentoTotalAplicado}% en el plan anual\n
             Su valor final es de: $${valorFinalConDescuentos} por año`);
-
+*/
 
 }
 
@@ -142,113 +155,123 @@ function generarDescuentosYMostrar(vectorPlanes, funcionDefinida){
 //----- Fin Funciones -----
 
 
+cotizarHtml.addEventListener("click", (event)=>{
 
+    event.preventDefault();
+    //operador logico para agregar la clase oculto a un boton en caso de que no la contenga
+    !botonVerHtml.classList.contains('oculto')&&botonVerHtml.classList.add('oculto');
+    console.log("entro al evento");
+    cantidadString = cantidadProductosHtml.value;
+    console.log(cantidadString);
+    soportePersonalizado = requiereSoporteHtml.value;
 
-
-
-//utiliza la funcion de orden superior
-generarDescuentosYMostrar(planes, generarDescuentos);
-generarDescuentosYMostrar(planes, mostrarDescuentos);
-
-
-
-//Evalúa cuantos productos tiene
-let cantidadString= prompt("¿Cuantos productos hay en tu carta?");
-let cantidadDeProductos= parseInt(cantidadString);
-
-
-   
-    if(!isNaN(cantidadDeProductos) && cantidadDeProductos>=1){
-
-        hayCantidad=true;   
+    //Evalúa cuantos productos tiene
     
-    }else{
+    cantidadDeProductos= parseInt(cantidadString);
+
+    //utiliza la funcion de orden superior
+    generarDescuentosYMostrar(planes, generarDescuentos);
+    generarDescuentosYMostrar(planes, mostrarDescuentos);
+    
+        if(!isNaN(cantidadDeProductos) && cantidadDeProductos>=1){
+
+            hayCantidad=true;   
         
-        //pide por segunda vez que ingrese un número
-        cantidadString= prompt("Ingresá un número válido \n ¿Cuantos productos hay en tu carta?");
-        cantidadDeProductos= parseInt(cantidadString);
+        }else{
+            
+            //Muestra una advertencia para que se ingrese un numero válido en el form y sale de la ejecución de la función
+            
+            recomendacion.innerHTML= `<p class="bg-warning"><strong>Ingresá un número válido</strong> para generarte un descuento</p>
+            <p>O mirá nuestros planes <strong>sin descuentos</strong></p> <br> 
+            `;
+            
+            botonVerHtml.classList.remove('oculto');
+            
 
+            return;
 
-        if(cantidadString===""){
-            noHayCantidad();
+            
+            
+            //cantidadDeProductos= parseInt(cantidadString);
+
         }
-        else if(cantidadString===null){
-            noHayCantidad();
+
+    //Evalúa si necesita soporte
+    let pidioSoporte=0;
+    let avisoSoporte="";
+    while(pidioSoporte<=1){
+
+        if(pidioSoporte==1){
+            avisoSoporte="Ingresá un dato válido \n";
         }
-        else if(cantidadDeProductos<=1){
-            noHayCantidad();
-        }
-        else{
-            hayCantidad=true;
+        
+        //let soportePersonalizado = prompt(`${avisoSoporte}¿Necesitás un plan con soporte personalizado via WhatsApp? \n Contesta con SI o NO`);
+
+        if( soportePersonalizado ==="SI" || 
+            soportePersonalizado ==="si" || 
+            soportePersonalizado ==="Si" || 
+            soportePersonalizado ==="sI"){
+            requiereSoporte=true;
+            break;
+
+        }else if(soportePersonalizado ==="NO" || 
+            soportePersonalizado ==="no" || 
+            soportePersonalizado ==="No" || 
+            soportePersonalizado ==="nO"){
+
+            requiereSoporte=false;
+            break;
+
+        }else{
+            pidioSoporte++;
         }
 
 
     }
 
-//Evalúa si necesita soporte
-let pidioSoporte=0;
-let avisoSoporte="";
-while(pidioSoporte<=1){
+    //Inteta ubicar al cliente en uno de los planes
 
-    if(pidioSoporte==1){
-        avisoSoporte="Ingresá un dato válido \n";
-    }
-    
-    let soportePersonalizado = prompt(`${avisoSoporte}¿Necesitás un plan con soporte personalizado via WhatsApp? \n Contesta con SI o NO`);
-
-    if( soportePersonalizado ==="SI" || 
-        soportePersonalizado ==="si" || 
-        soportePersonalizado ==="Si" || 
-        soportePersonalizado ==="sI"){
-        requiereSoporte=true;
-        break;
-
-    }else if(soportePersonalizado ==="NO" || 
-        soportePersonalizado ==="no" || 
-        soportePersonalizado ==="No" || 
-        soportePersonalizado ==="nO"){
-
-        requiereSoporte=false;
-        break;
-
-    }else{
-        pidioSoporte++;
+    if(hayCantidad===true && cantidadDeProductos<=30 && requiereSoporte===false){
+        planSugerido=0;    
+    }else if(cantidadDeProductos>=30 && requiereSoporte===false){
+        planSugerido=1;
+    }else if(requiereSoporte===true){
+        planSugerido=2;
     }
 
 
-}
+    //Muestra un mensaje correspondiente a cada situación
+    //incluso si no ingresó los datos que se le pidió
 
-//Inteta ubicar al cliente en uno de los planes
+    switch (planSugerido) {
+        case 0:
+            recomendarPlan(planSugerido);
+            break;
+        
+        case 1:
+            recomendarPlan(planSugerido);
+            break;
+        
+        case 2:
+            recomendarPlan(planSugerido);
+            break;
 
-if(hayCantidad===true && cantidadDeProductos<=30 && requiereSoporte===false){
-    planSugerido=0;    
-}else if(cantidadDeProductos>=30 && requiereSoporte===false){
-    planSugerido=1;
-}else if(requiereSoporte===true){
-    planSugerido=2;
-}
+        default:
+            alert(`Te sugerimos que nos contactes por WhatsApp\npara ayudarte a definir el mejor plan para vos\n\n${ofertaCompleta} \nNuestros vendedores podrán asignarte descuentos extras \ndependiendo de la cantidad de productos que tengas `);
+            break;
+    }
 
-
-//Muestra un mensaje correspondiente a cada situación
-//incluso si no ingresó los datos que se le pidió
-
-switch (planSugerido) {
-    case 0:
-        recomendarPlan(planSugerido);
-        break;
     
-    case 1:
-        recomendarPlan(planSugerido);
-        break;
+
+});
+
+
+botonVerHtml.addEventListener("click", (event)=>{
+
+    recomendacion.innerHTML= `<p><strong>Te sugerimos que nos contactes por WhatsApp</strong><br>
+    para ayudarte a definir el mejor plan para vos<br><br>${ofertaCompleta} <br>
+    Nuestros vendedores podrán asignarte descuentos extras <br>
+    dependiendo de la cantidad de productos que tengas </p>`;
+    botonVerHtml.classList.add('oculto');
     
-    case 2:
-        recomendarPlan(planSugerido);
-        break;
-
-    default:
-        alert(`Te sugerimos que nos contactes por WhatsApp\npara ayudarte a definir el mejor plan para vos\n\n${ofertaCompleta} \nNuestros vendedores podrán asignarte descuentos extras \ndependiendo de la cantidad de productos que tengas `);
-        break;
-}
-
-
-
+});
