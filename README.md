@@ -26,3 +26,8 @@ Manejo del descuento:
 Modificando la variable descuentoPorcentaje en el código
 hacemos que el sistema aplique automáticamente el descuento
 que esté activo en ese momento 
+
+Tambien se aplica un descuento que se suma al anterior dependiendo 
+la cantidad de productos con la que quiera trabajar el usuario
+A menor cantidad de productos, mayor es el descuento
+esto se maneja con la variable descuentoExtra
