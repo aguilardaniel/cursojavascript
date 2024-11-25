@@ -6,12 +6,22 @@
     <title>Simulador sistema de pedidos</title>
   
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.5.0/build/global/luxon.min.js"></script>
 
     <style>
 
         .oculto{
 
             display: none;
+        }
+
+        h3{
+            font-size: 20px;
+            color: green;
+        }
+        .listaDePlanesCotizados p{
+            margin-bottom: 0.2rem;
+            font-size: 14px;
         }
         
 
@@ -50,6 +60,18 @@
         
     </div>
     <div class="container pl-0"><button class="btn btn-success oculto" id="botonVer">Ver Planes sin descuento</button></div>
+
+    <br>
+    <h2 class="text-center">Cotizaciones Anteriores</h2>
+    <p class="text-center">Mantenemos el precio de tus cotizaciones anteriores disponibles por un mes</p>
+    <br>
+    <div class="listaDePlanesCotizados" id="listaDePlanesCotizados">
+        <!-- <h3>Plan Medium</h3>
+        <p><b>Cantidad Maxima de productos:</b> Ilimitados</p>
+        <p><b>Valor:</b> $56771</p>
+        <p><b>Cotizado el día:</b> 24/11</p>
+        <hr> -->
+    </div>
 </div>
 
 
