@@ -43,6 +43,7 @@ let cantidadProductosHtml= document.getElementById("cantidadProductos");
 let requiereSoporteHtml= document.getElementById("requiereSoporte");
 let labelCantidad= document.getElementById("labelCantidad");
 let listaDePlanesCotizados = document.getElementById("listaDePlanesCotizados");
+let imagen2 = document.getElementById("imagen2");
 
 let botonVerHtml= document.getElementById("botonVer");
 let cotizarHtml= document.getElementById("cotizar");
@@ -52,6 +53,21 @@ let cantidadDeProductos;
 
 let planYaCotizado;
 let planesCotizados=[];
+
+
+fetch("https://pokeapi.co/api/v2/pokemon/ditto")
+  .then((response) => response.json())
+  .then((data) => {
+    
+    const dittoImage = data.sprites.front_default;
+    console.log("Imagen de Ditto:", dittoImage);
+
+    
+    const imgElement = document.createElement("img");
+    imgElement.src = dittoImage;
+    imagen2.appendChild(imgElement);
+  })
+  .catch((error) => console.error("Error:", error));
 
 
 const respuestaDelLocalStorage = (clave)=>{
@@ -177,6 +193,7 @@ function mostrarCotizacionesAnteriores(){
         .catch((resp)=>{
 
             listaDePlanesCotizados.innerHTML+= `
+        
         <p><b>${resp}</b> </p>
         <hr>`;
 
