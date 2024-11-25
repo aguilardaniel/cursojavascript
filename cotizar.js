@@ -74,9 +74,7 @@ const respuestaDelLocalStorage = (clave)=>{
 
     return new Promise((resolve, reject) => {
 
-        /* if(JSON.parse(localStorage.getItem("Cotizaciones"))){
-            planesCotizados= JSON.parse(localStorage.getItem("Cotizaciones"));
-            } */
+        
             
             respuesta= JSON.parse(localStorage.getItem(clave));
             
@@ -106,17 +104,7 @@ const planes=[
 ];
 
 
-/* 
-if(JSON.parse(localStorage.getItem("Cotizaciones"))){
-    planesCotizados= JSON.parse(localStorage.getItem("Cotizaciones"));
-    } */
 
-
-
-
-//localStorage.setItem("planes", JSON.stringify(planes));
-//const planesJSON= JSON.stringify(planes);
-//localStorage.setItem(planesJSON);
 
 let planesConDescuento=[];
 
@@ -147,18 +135,16 @@ const DateTime = luxon.DateTime;
 //----- Funciones--------
 function tomarFechaActual(){
     const now= DateTime.now();
-//const fecha2= fecha.toLocalString(fecha.DATETIME_SHORT_WITH_SECONDS);
-//fecha=now.toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS);
+
 const fechaActual = now.toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS);
 return fechaActual;
 }
 
 function filtrarElementosViejos(){
-//console.log(planesCotizados[0].tiempo);
-//console.log(typeof planesCotizados[0].tiempo);
+
    planesCotizados = planesCotizados.filter((planCotizado) => planCotizado.tiempo < 1);
    guardarPlanes();
-   //localStorage.setItem("Cotizaciones" , JSON.stringify(planesCotizados));
+   
 
 }
 
@@ -179,9 +165,7 @@ function guardarPlanes(){
 
 function mostrarCotizacionesAnteriores(){
 
-   /*  if(JSON.parse(localStorage.getItem("Cotizaciones"))){
-        planesCotizados= JSON.parse(localStorage.getItem("Cotizaciones"));
-        } */
+   
         
 
     respuestaDelLocalStorage("Cotizaciones")
@@ -209,15 +193,7 @@ function mostrarCotizacionesAnteriores(){
         
         //Ejecuta la funcion para actualizar el tipo restante disponible de las cotizaciones ya hechas
         
-        /* listaDePlanesCotizados.innerHTML+= `
         
-        <h3>${planCotizado.plan}</h3>
-        <p><b>¿Incluye Soporte via WhatsApp?: </b> ${planCotizado.SoporteViaWhatsApp}</p>
-        <p><b>Cantidad Maxima de productos:</b> ${planCotizado.maximoDeProductos}</p>
-        <p><b>Valor:</b> $${planCotizado.precio}</p>
-        <p><b>Cotizado el día: </b>${ planCotizado.fecha}hs</p>
-        <button type="button" class="btn btn-success">Lo Quiero...</button>
-        <hr>`; */
         
     });
  
@@ -227,7 +203,7 @@ function mostrarCotizacionesAnteriores(){
 
     planesCotizados.forEach(planCotizado => {
 
-       /*  actualizarTiempoRestante(planCotizado); */
+       
         
         
         //Ejecuta la funcion para actualizar el tipo restante disponible de las cotizaciones ya hechas
@@ -243,12 +219,7 @@ function mostrarCotizacionesAnteriores(){
         <hr>`;
         
     });
-    //Y despues filtra los elementos que hace más de un mes fueron cotizados
-
-   /*  recomendacion.innerHTML= `<p class="ml-3"> Te sugerimos contratar nuestro <strong> ${planes[plan].nombre} </strong><br><br> 
-                Para la cantidad de productos que definiste <br>podemos hacerte <strong> un descuento de  ${descuentoTotalAplicado}% </strong> en el plan anual.
-                <br><br> Su valor final es de: <strong> $${valorFinalConDescuentos} por año </strong></p>`;
-    */
+    
 }
 
 
@@ -268,19 +239,11 @@ function actualizarTiempoRestante(planCotizado){
     
     planCotizado.tiempo = diferenciaEnMeses;
     guardarPlanes();
-    //localStorage.setItem("Cotizaciones" , JSON.stringify(planesCotizados));
+    
 
 
     
-    /* if(diferenciaEnMeses>= 1){
-        //planesCotizados.pop();
-        localStorage.setItem("Cotizaciones" , JSON.stringify(planesCotizados));
-        
-    }else{
-        planCotizado.tiempo = diferenciaEnMeses;
-        localStorage.setItem("Cotizaciones" , JSON.stringify(planesCotizados));
-    }
-     */
+   
 
 }
 
@@ -309,9 +272,7 @@ function generarDescuentoFinal(plan){
     let precioConDescuento = planes[plan].precio - planes[plan].precio * (descuentoPorcentaje + descuentoExtra) / 100;
     
 
-    //const fechaActual = new Date().toISOString();
-    //const fechaActual = now.toISO();
-    //console.log(fechaActual);
+    
     
    
 
@@ -344,7 +305,7 @@ function generarDescuentoFinal(plan){
             planCotizado.fecha=  tomarFechaActual();
             guardarPlanes();
             
-            //localStorage.setItem("Cotizaciones" , JSON.stringify(planesCotizados));
+           
             mostrarCotizacionesAnteriores();
 
         }
@@ -382,11 +343,7 @@ const descuentoTotalAplicado = descuentoPorcentaje + descuentoExtra;
 recomendacion.innerHTML= `<p class="ml-3"> Te sugerimos contratar nuestro <strong> ${planes[plan].nombre} </strong><br><br> 
             Para la cantidad de productos que definiste <br>podemos hacerte <strong> un descuento de  ${descuentoTotalAplicado}% </strong> en el plan anual.
             <br><br> Su valor final es de: <strong> $${valorFinalConDescuentos} por año </strong></p>`;
-/*
-    alert(`Te sugerimos contratar nuestro ${planes[plan].nombre}\n 
-            Para la cantidad de productos que definiste podemos hacerte un descuento de ${descuentoTotalAplicado}% en el plan anual\n
-            Su valor final es de: $${valorFinalConDescuentos} por año`);
-*/
+
 
 }
 
@@ -449,7 +406,7 @@ cotizarHtml.addEventListener("click", (event)=>{
 
             
             
-            //cantidadDeProductos= parseInt(cantidadString);
+           
 
         }
 
@@ -462,8 +419,7 @@ cotizarHtml.addEventListener("click", (event)=>{
             avisoSoporte="Ingresá un dato válido \n";
         }
         
-        //let soportePersonalizado = prompt(`${avisoSoporte}¿Necesitás un plan con soporte personalizado via WhatsApp? \n Contesta con SI o NO`);
-
+       
         if( soportePersonalizado ==="SI" || 
             soportePersonalizado ==="si" || 
             soportePersonalizado ==="Si" || 
